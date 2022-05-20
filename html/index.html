@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <script type="text/javascript" src="nui://game/ui/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="all.css">
+    <script>
+        $(function() {
+            window.addEventListener('message', function(event) {
+                if (event.data.type == "init") {
+                    $('body').css('display', 'block')
+                    setTimeout(function() {
+                        document.getElementById("menu-toggler").checked = true;
+                    }, 50);
+
+                } else if (event.data.type == "destroy") {
+                    document.getElementById("menu-toggler").checked = false;
+                    setTimeout(function() {
+                        $('body').css('display', 'none')
+                    }, 400);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav class='menu'>
+        <input class='menu-toggler' id='menu-toggler' type='checkbox'>
+        <label for='menu-toggler'></label>
+        <ul>
+            <li class='menu-item' data-id="billing">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648079164936232/check.png" /></a>
+            </li>
+            <li class='menu-item' data-id="inventory">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648078758105118/backpack.png" /></a>
+            </li>
+            <li class='menu-item' data-id="dance">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648079680864296/dance.png" /></a>
+            </li>
+            <li class='menu-item' data-id="gang">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648080024776734/gang.png" /></a>
+            </li>
+            <li class='menu-item' data-id="job">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648080263860304/job.png" /></a>
+            </li>
+            <li class='menu-item' data-id="phone">
+                <a><img src="https://cdn.discordapp.com/attachments/901262797231509504/949648080762961930/phone.png" /></a>
+            </li>
+        </ul>
+    </nav>
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "200px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        $("#menu-toggler").click(function() {
+            $.post('http://xC_OpenMenu/closemenu', JSON.stringify({}));
+        });
+
+        $("li.menu-item").click(function() {
+            $.post('http://xC_OpenMenu/openmenu', JSON.stringify({
+                id: $(this).data('id')
+            }));
+        });
+    </script>
+</body>
+
+</html>
